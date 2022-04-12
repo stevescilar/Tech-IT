@@ -6,7 +6,7 @@ from .models import Product
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('product_name','price','stock','category','modified_date','is_available')
-    prepoluted_fields = {
+    prepopulated_fields = {
         'slug':(('product_name',))
         }
 
