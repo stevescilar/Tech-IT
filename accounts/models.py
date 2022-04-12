@@ -3,6 +3,23 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 # custom user model
+
+class MyAccountManager(BaseUserManager):
+    def create_user(self, first_name, last_name, username, email , password = None):
+        if not email:
+            raise ValueError('User must have an email address')
+
+        if not username:
+            raise ValueError('User must have a username')
+
+        user = self.model(
+            email = self.normalize_email(email)
+            username = username,
+            first_name = first_name,
+            last_name = last_name,        
+        )
+
+        
 class Account(AbstractBaseUser):
     first_name      = models.CharField(max_length=50)
     last_name       = models.CharField(max_length=50)
