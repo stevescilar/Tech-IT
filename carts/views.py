@@ -14,7 +14,7 @@ def _cart_id(request):
 def add_cart(request, product_id):
     product = Product.objects.get(id=product_id) #get product
     try:
-        cart = Cart.objects.get(cart_id = _cart_id(request) ) #cookies 
+        cart = Cart.objects.get(cart_id=_cart_id(request) ) #cookies 
     except Cart.DoesNotExist:
         cart = Cart.objects.create(
             cart_id = _cart_id(request)
