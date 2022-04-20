@@ -47,5 +47,5 @@ class Variation(models.Model):
     objects = VariationManager()
 
     def __str__(self):
-        return self.product
+        return self.variation_value
 
