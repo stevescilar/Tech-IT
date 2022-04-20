@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.exceptions import ObjectDoesNotExist
 from carts.models import Cart, CartItem
@@ -14,6 +15,11 @@ def _cart_id(request):
 
 
 def add_cart(request, product_id):
+    color = request.GET['color']
+    size = request.GET['size']
+    return HttpResponse(color + ' ' + size)
+    exit()
+
     product = Product.objects.get(id=product_id) #get product
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request) ) #cookies 
@@ -71,7 +77,7 @@ def cart(request,total=0, quantity=0, cart_items=None ):
         tax = (16 * total)/100
         grand_total = total + tax 
 
-    except ObjectDoesNotExist:
+    except ObjectDoesNotExist: 
         pass 
 
     context = {
