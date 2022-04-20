@@ -5,9 +5,10 @@ from store.models import Product
 # Create your views here.
 
 def _cart_id(request):
+    cart = request.session.session_key
     if not cart:
         cart = request.session.create()
-        return cart
+    return cart
 
 
 
