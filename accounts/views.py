@@ -1,4 +1,6 @@
 from base64 import urlsafe_b64decode, urlsafe_b64encode
+from email import message_from_binary_file
+from email.errors import MessageError
 from email.message import EmailMessage
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -140,4 +142,21 @@ def resetpassword_validate(request, uidb64, token):
 
 
 def resetPassword(request):
-    return render(request,'accounts/resetPassword.html')
+    if request.method == 'POST':
+        password  = request.POST['password']
+        confirm_password  = request.POST['confirm_password']
+
+        if password == confirm_password:
+            uid = request.session.get('uid')
+            user = Account.objects.get(pk=uid)
+
+            user.set_password(password)
+            user.save()
+            messages.success(request,'Password reset was successful')
+            return redirect('login')
+
+        else:
+            messages.error(request,'passwords do not match!')
+            return redirect('resetPassword')
+    else:
+        return render(request,'accounts/resetPassword.html')
