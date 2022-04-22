@@ -12,14 +12,54 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title mb-4">Billing Address</h4>
-            <form action="">
+            <form action="" method="POST">
+                {% csrf_token %}
                 <div class="form-row">
                     <div class="col form-group">
                         <label for="">First Name</label>
                         <input type="text" name="first_name" class="form-control" required>
                     </div>
+                    <div class="col form-group">
+                        <label for="">Last Name</label>
+                        <input type="text" name="last_name" class="form-control" required>
+                    </div>
                 </div>
-            </form>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label for="">Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="">Phone Number</label>
+                        <input type="text" name="phone" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label for="">Region</label>
+                        <input type="text" name="region" class="form-control" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="">City</label>
+                        <input type="text" name="city" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label for="">Street</label>
+                        <input type="text" name="street" class="form-control" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="">Pickup Station</label>
+                        <input type="text" name="pickup" class="form-control" required>
+                    </div>
+                
+                    <div class="col form-group">
+                        <label for=""> Order Note </label> 
+                        <textarea name="order_note" id="" rows="2" class="form-control"></textarea>
+                    </div>
+                </div>
+            
         </div>
     </div> <!-- card.// -->
     
@@ -35,7 +75,7 @@
                           <th scope="col">Product</th>
                           <th scope="col" width="120">Quantity</th>
                           <th scope="col" width="120">Price</th>
-                          <th scope="col" class="text-right" width="200"> </th>
+                          
                         </tr>
                         </thead>
                         <tbody>
@@ -58,20 +98,9 @@
                                 <!-- col.// -->
                                             <div class="col"> 
                                                 <div class="input-group input-spinner">
-                                                    <div class="input-group-prepend">
-                                                    <a href="{% url 'remove_cart' cart_item.product.id cart_item.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
-                                                    </div>
-                                                    <input type="text" class="form-control"  value="{{ cart_item.quantity }}">
-                                                    <div class="input-group-append">
-                                                    <form action="{% url 'add_cart' cart_item.product.id %}"method="POST">
-                                                        {% csrf_token %}
-                                                        {% for item in cart_item.variations.all %}
-                                                        <input  type="hidden" name="{{ item.variation_category | lower }}" value="{{ item.variation_value | capfirst}}">
-                                                        {% endfor %}
-                                                        <button type="submit" class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
-                    
-                                                    </form>
-                                                </div>
+                                                    
+                                                    <label for="">{{cart_item.quantity}}</label>
+
                                                 </div> <!-- input-group.// -->
                                             </div> <!-- col.// -->
                             </td>
@@ -81,18 +110,17 @@
                                     <small class="text-muted"> ${{ cart_item.product.price }} each </small> 
                                 </div> <!-- price-wrap .// -->
                             </td>
-                            <td class="text-right"> 
-                            <a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" onclick="return confirm('Are you sure you want remove this item?')" class="btn btn-danger"> Remove</a>
-                            </td>
+                           
                         </tr>
                         {% endfor %}
                         </tbody>
                         </table>
-                <a href="./place-order.html" class="btn btn-primary btn-block"> Place Order </a>
+                <button type="submit" class="btn btn-primary btn-block"> Place Order </button>
                 <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+            </form>
             </div> <!-- card-body.// -->
             </div> <!-- card.// -->
-    
+        
     </aside> <!-- col.// -->
     
     
