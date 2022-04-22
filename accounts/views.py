@@ -52,6 +52,11 @@ def register(request):
     }
     return render(request, 'accounts/register.html',context)
 
+# forgot password
+
+def forgotPassword(request):
+    return render(request,'accounts/forgotPassword.html')
+
 def login(request):
     if request.method == 'POST':
         email = request.POST['email']
