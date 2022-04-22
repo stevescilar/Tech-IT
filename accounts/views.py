@@ -29,7 +29,7 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email,username=username,password=password)
             user.phone_number = phone_number
             user.save()
-            messages.success(request, 'Registration Successful.')
+            # messages.success(request, 'Submitted successfully, Please check your mailbox to verify your Email!')
 
             # user activation  
             current_site = get_current_site(request)
@@ -43,7 +43,7 @@ def register(request):
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
-            return redirect ('register')
+            return redirect ('/accounts/login/?command=verification&email='+email)
 
     else:
         form = RegistrationForm()
