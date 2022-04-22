@@ -1,5 +1,6 @@
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from email.message import EmailMessage
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from accounts.forms import RegistrationForm
@@ -73,3 +74,22 @@ def logout(request):
     auth.logout(request)
     messages.success(request,'You have been logged out.')
     return redirect('login')
+
+# email activations
+def activate(request,uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = Account._default_manager.get(pk=uid)
+
+    except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request,'Yaay! your account is now activated. Happy Shopping!')
+        return redirect('login')
+    else:
+        messages.error(request,'Invalid activation link')
+        return redirect('register')
+
