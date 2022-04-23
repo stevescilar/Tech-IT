@@ -6,15 +6,9 @@
     <div class="container">
     
     <!-- ============================ COMPONENT 1 ================================= -->
-    {% if not cart_items %}
-        <h2 class="text-center">Shopping cart is Empty </h2>
-        <br>
-        <div class="text-center">
-            <a href="{% url 'store' %}" class="btn btn-primary"> Continue Shopping </a>
-        </div>
-    {% else %}
+   
     <div class="row">
-        <aside class="col-lg-9">
+        <aside class="col-lg-8">
     <div class="card">
     <table class="table table-borderless table-shopping-cart">
     <thead class="text-muted">
@@ -78,7 +72,7 @@
     </div> <!-- card.// -->
     
         </aside> <!-- col.// -->
-        <aside class="col-lg-3">
+        <aside class="col-lg-4">
     
             <div class="card">
             <div class="card-body">
@@ -98,8 +92,8 @@
                 <p class="text-center mb-3">
                     <img src="{% static 'images/misc/payments.png' %}" height="26">
                 </p>
-                <a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Checkout </a>
-                <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+                <a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Make Payments </a>
+                
             </div> <!-- card-body.// -->
             </div> <!-- card.// -->
     
@@ -107,7 +101,7 @@
     
     
     </div> <!-- row.// -->
-    {% endif %}
+    
     <!-- ============================ COMPONENT 1 END .// ================================= -->
     
     </div> <!-- container .//  -->
