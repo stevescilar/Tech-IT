@@ -12,7 +12,13 @@
             <div class="card">
                 <h5 class="card-header">Billing <Address></Address></h5>
                 <div class="card-body">
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <p class="card-text mb-0"> <strong>Name:</strong>  {{order.full_name | title }} </p>
+                  <p class="card-text mb-0"><strong>Address:</strong>  {{order.full_address | title }}</p>
+                  <p class="card-text mb-0"><strong>Pickup_station:</strong>  {{order.pickup | title }}</p>
+                  <p class="card-text mb-0"><strong>Contact:</strong>  {{order.phone}}</p>
+                  {% if order.order_note %}
+                  <p class="card-text mb-0"><strong>Comment:</strong>  {{order.order_note |capfirst}}</p>
+                  {% endif %}
                 </div>
             </div>
             <div class="card">
