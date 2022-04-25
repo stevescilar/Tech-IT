@@ -15,10 +15,10 @@
                   <p class="card-text mb-0"> <strong>Name:</strong>  {{order.full_name | title }} </p>
                   <p class="card-text mb-0"><strong>Address:</strong>  {{order.full_address | title }}</p>
                   <p class="card-text mb-0"><strong>Pickup_station:</strong>  {{order.pickup | title }}</p>
+                  <p class="card-text mb-0"><strong>Email:</strong>  {{order.email}}</p>
                   <p class="card-text mb-0"><strong>Contact:</strong>  {{order.phone}}</p>
-                  {% if order.order_note %}
-                  <p class="card-text mb-0"><strong>Comment:</strong>  {{order.order_note |capfirst}}</p>
-                  {% endif %}
+                  <p class="card-text mb-0"><strong>Comment:</strong>  {{ order.order_note }}</p>
+                  
                 </div>
             </div>
             <div class="card">
