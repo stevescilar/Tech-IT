@@ -9,6 +9,7 @@ from .forms import OrderForm
 from .models import Order, Payment
 import json
 from orders.models import OrderProduct
+from store.models import Product
 
 def payments(request):
     body = json.loads(request.body)
@@ -43,13 +44,21 @@ def payments(request):
         orderproduct.ordered = True
         orderproduct.save()
 
-
-
+        # adding variations to table
+        cart_item  = CartItem.objects.get(id=item.id)
+        product_variation  = cart_item.variations.all()
+        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        orderproduct.variations.set(product_variation)
+        orderproduct.save()
 
     # reduce stock quantity
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
 
-    # clear cart
 
+# clear cart
+    CartItem.objects.filter(user=request.user).delete()
     # send order received to email
 
     # send order number amd transaction id back to sendData method via JSONresponse
