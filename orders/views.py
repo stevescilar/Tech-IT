@@ -1,7 +1,7 @@
 from datetime import datetime,date
 from multiprocessing.dummy import current_process
 from time import strftime
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from carts.models import CartItem
@@ -70,9 +70,13 @@ def payments(request):
     to_email = request.user.email
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
-    # send order number amd transaction id back to sendData method via JSONresponse
 
-    return render(request,'orders/payments.html')
+    # send order number amd transaction id back to sendData method via JSONresponse
+    data = {
+        'order_number' : order.order_number,
+        'transID' : payment.payment_id
+        }
+    return JsonResponse(data)
 
 
 def place_order(request,total=0, quantity=0, cart_items=None):
@@ -138,5 +142,6 @@ def place_order(request,total=0, quantity=0, cart_items=None):
             return redirect('checkout')
 
 
-
+def order_complete(request):
+    return render(request, 'orders/order_complete.html')
 

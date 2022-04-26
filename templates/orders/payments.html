@@ -143,6 +143,7 @@
         var csrftoken = getCookie('csrftoken');
         var orderID = "{{ order.order_number }}"
         var payment_method = 'PayPal'
+        var redirect_url = "{% url 'order_complete' %}"
         paypal.Buttons({
 
             style: {
@@ -183,8 +184,12 @@
                         status: orderData.status,
                     }),
                 })
-                // .then(response => response.json())
+                .then(response => response.json())
                 // .then(data => console.log(data));
+                .then((data) => {
+                  window.location.href = redirect_url + '?order_number=' + data.order_numer+'&payment_id='+data.transID;
+                });
+
 
               }
             //   alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
