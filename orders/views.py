@@ -8,6 +8,7 @@ from carts.models import CartItem
 from .forms import OrderForm
 from .models import Order, Payment
 import json
+from orders.models import OrderProduct
 
 def payments(request):
     body = json.loads(request.body)
@@ -23,10 +24,36 @@ def payments(request):
     )
     payment.save()
 
-
+    # update order table
     order.payment = payment
     order.is_ordered = True
     order.save()
+    
+    # move the cart items to Order Product Table
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    for item in cart_items:
+        orderproduct = OrderProduct()
+        orderproduct.order_id  = order.id
+        orderproduct.payment = payment
+        orderproduct.user_id = request.user.id
+        orderproduct.product_id = item.product_id 
+        orderproduct.quantity = item.quantity
+        orderproduct.product_price = item.product.price
+        orderproduct.ordered = True
+        orderproduct.save()
+
+
+
+
+    # reduce stock quantity
+
+    # clear cart
+
+    # send order received to email
+
+    # send order number amd transaction id back to sendData method via JSONresponse
+
     return render(request,'orders/payments.html')
 
 
