@@ -187,7 +187,7 @@
                 .then(response => response.json())
                 // .then(data => console.log(data));
                 .then((data) => {
-                  window.location.href = redirect_url + '?order_number=' + data.order_numer+'&payment_id='+data.transID;
+                  window.location.href = redirect_url + '?order_number=' + data.order_number+'&payment_id='+data.transID;
                 });
 
 

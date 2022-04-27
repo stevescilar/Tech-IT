@@ -74,7 +74,7 @@ def payments(request):
     # send order number amd transaction id back to sendData method via JSONresponse
     data = {
         'order_number' : order.order_number,
-        'transID' : payment.payment_id
+        'transID' : payment.payment_id,
         }
     return JsonResponse(data)
 
@@ -150,10 +150,16 @@ def order_complete(request):
         order = Order.objects.get(order_number = order_number,is_ordered = True)
         ordered_products = OrderProduct.objects.filter(order_id = order.id)
 
+        payment = Payment.objects.get(payment_id=transID)
+
         context = {
+
             'order': order,
             'ordered_products': ordered_products,
             'order_number': order.order_number,
+            'transID': payment.payment_id,
+            'payment':payment,
+
         }
         return render(request, 'orders/order_complete.html', context)
     except (Payment.DoesNotExist, Order.DoesNotExist):

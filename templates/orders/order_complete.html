@@ -45,10 +45,10 @@
                             <div class="invoice-details mt25">
                                 <div class="well">
                                     <ul class="list-unstyled mb0">
-                                        <li><strong>Order</strong> #</li>
-                                        <li><strong>Transaction</strong> #</li>
-                                        <li><strong>Order Date:</strong> Monday, October 10th, 2015</li>
-                                        <li><strong>Status:</strong> PAID</li>
+                                        <li><strong>Order:</strong> #{{ order_number }}</li>
+                                        <li><strong>Transaction ID: </strong> {{transID}}</li>
+                                        <li><strong>Order Date:</strong> {{ order.created_at }}</li>
+                                        <li><strong>Status:</strong> {{ payment.status }}</li>
                                     </ul>
                                 </div>
                             </div>
