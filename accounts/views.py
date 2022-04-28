@@ -2,12 +2,13 @@ from base64 import urlsafe_b64decode, urlsafe_b64encode
 from email import message_from_binary_file
 from email.errors import MessageError
 from email.message import EmailMessage
+from http.client import REQUEST_ENTITY_TOO_LARGE
 from math import prod
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from accounts.forms import RegistrationForm
-from .models import Account
+from accounts.forms import RegistrationForm,UserForm,UserProfileForm
+from .models import Account, UserProfile
 from django.contrib import messages , auth
 from carts.views import _cart_id
 from carts.models import Cart,CartItem  
@@ -236,4 +237,22 @@ def my_orders(request):
     return render (request,'accounts/my_orders.html',context)
 
 def edit_profile(request):
-    return render(request,'accounts/edit_profile.html')
+    userprofile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request,"Your Profile has been updated.")
+            return redirect('edit_profile')
+    else:
+        user_form  = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=userprofile)
+    context = {
+        'user_form' :   user_form,
+        'profile_form' : profile_form,
+        'userprofile':  userprofile,
+        
+    }       
+    return render(request,'accounts/edit_profile.html',context)
