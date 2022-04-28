@@ -1,4 +1,5 @@
 from enum import unique
+from hashlib import blake2b
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -71,3 +72,15 @@ class Account(AbstractBaseUser):
         return True
 
 
+class UserProfile(models.Model):
+    user    =   models.OneToOneField(Account, on_delete=models.CASCADE)
+    region  =   models.CharField(blank=True,max_length=100)
+    city    =   models.CharField(blank=True,max_length=100)
+    street  =   models.CharField(blank=True,max_length=100)
+    profile_picture =   models.ImageField(blank=True, upload_to = 'userprofile')
+
+    def __str__(self):
+        return self.user.first_name
+
+    def full_address(self):
+        return f'{self.region} {self.city} - {self.street}'
