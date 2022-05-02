@@ -258,3 +258,6 @@ def edit_profile(request):
         
     }       
     return render(request,'accounts/edit_profile.html',context)
+
+def change_password(request):
+    return redirect(request,'accounts/change_password.html')
