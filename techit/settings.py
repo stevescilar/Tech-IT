@@ -14,6 +14,7 @@ from ctypes import cast
 from pathlib import Path
 from decouple import config
 import os
+from django.utils.translation import gettext_lazy as _
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,17 +48,23 @@ INSTALLED_APPS = [
     'carts',
     'orders',
     'fontawesome',
+    'admin_honeypot',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# session timout
+SESSION_EXPIRE_SECONDS = 3600 
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = 'accounts/login'
 
 ROOT_URLCONF = 'techit.urls'
 
