@@ -1,7 +1,6 @@
 from distutils.command.upload import upload
 from itertools import count
 from tabnanny import verbose
-from tkinter import CASCADE
 from typing import Counter
 from unittest.util import _MAX_LENGTH
 from django.db import models
