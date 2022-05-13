@@ -159,10 +159,11 @@ def activate(request,uidb64, token):
 
 @login_required(login_url = 'login')
 def dashboard(request):
+    userprofile = UserProfile.objects.get(user_id=request.user.id)
     # userprofile = get_object_or_404(UserProfile, user=request.user)
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered = True)
     orders_count = orders.count()
-    userprofile = UserProfile.objects.get(user_id=request.user.id)
+   
     context = {
         'orders_count':orders_count,
         'userprofile' : userprofile,
