@@ -141,7 +141,7 @@ def place_order(request,total=0, quantity=0, cart_items=None):
         else:
             return redirect('checkout')
 
-
+# we have a problem here
 def order_complete(request):
     order_number = request.GET.get('order_number')
     transID = request.GET.get('payment_id')
@@ -157,7 +157,6 @@ def order_complete(request):
         payment = Payment.objects.get(payment_id=transID)
 
         context = {
-
             'order': order,
             'ordered_products': ordered_products,
             'order_number': order.order_number,
